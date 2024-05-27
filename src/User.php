@@ -5,7 +5,7 @@ class User
 {
 	private $db;
 
-	public function g($ids)
+	public function getUsernamesByIds($ids)
 	{
 		if (empty($ids)) {
 			return [];
