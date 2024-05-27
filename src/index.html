@@ -8,7 +8,22 @@
 </head>
 
 <body>
-	<p>My IP is <span id="ip" /></p>
+	<p>My IP is <span id="ip"></span></p>
+
+	<script>
+		const fetchIP = async () => {
+			try {
+				const response = await fetch('https://ipinfo.io/json');
+				const json = await response.json();
+				document.getElementById('ip').textContent = json.ip;
+
+			} catch (error) {
+				console.error('Erro ao obter o IP:', error);
+			}
+		}
+
+		fetchIP();
+	</script>
 </body>
 
 </html>
