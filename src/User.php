@@ -1,20 +1,31 @@
 <?php
 namespace User;
 
-class User {
+class User
+{
 	private $db;
 
-	public function g($ids) {
-		$users = [];
+	public function g($ids)
+	{
+		if (empty($ids)) {
+			return [];
+		}
 
-		foreach ($ids as $id) {
-			$users[] = $this->db->q('SELECT username FROM user WHERE id = ' . $id);
+		$ids = array_map('intval', $ids);
+		$idList = implode(',', $ids);
+
+		$result = $this->db->q('SELECT id, username FROM user WHERE id IN (' . $idList . ')');
+
+		$users = [];
+		foreach ($result as $row) {
+			$users[] = $row['username'];
 		}
 
 		return $users;
 	}
 
-	public function setDb($db) {
+	public function setDb($db)
+	{
 		if (!$db || $db->isClosed()) {
 			return false;
 		}
@@ -31,5 +42,4 @@ class User {
 		$this->db = $db;
 	}
 }
-
 ?>
