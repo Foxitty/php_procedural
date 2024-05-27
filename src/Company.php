@@ -3,28 +3,32 @@ namespace Company;
 
 class Company
 {
-	private int $id;
+	protected int $id;
+
+	public function __construct(int $id)
+	{
+		$this->id = $id;
+	}
 
 	public function greetings()
 	{
 		return "Greetings. Your ID is $this->id";
 	}
-	public function setDb($db)
+}
+
+class CompanyClient extends Company
+{
+	private int $registration;
+
+	public function __construct(int $id, int $registration)
 	{
-		if (!$db || $db->isClosed()) {
-			return false;
-		}
+		parent::__construct($id);
+		$this->registration = $registration;
+	}
 
-		if ($db->debug) {
-			$db->setGeneralLog('on');
-			error_log($db);
-		}
-
-		if ($db->profiling) {
-			$db->setSlowLog('on');
-		}
-
-		$this->db = $db;
+	public function greetings()
+	{
+		return "Greetings. Your ID is $this->id and your registration number is $this->registration.";
 	}
 }
 
