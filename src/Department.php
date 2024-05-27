@@ -5,11 +5,14 @@ require_once './User.php';
 
 class Department
 {
+	private $db;
+
 	private User\User $user;
 
-	public function __construct()
+	public function __construct($db)
 	{
-		$this->user = new User\User(); // @todo fixme
+		$this->setDb($db);
+		$this->user = new User\User();
 	}
 
 	public function getLargestDepartmentsForUsers()
